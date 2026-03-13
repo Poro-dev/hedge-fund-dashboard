@@ -1,5 +1,4 @@
-import { redirect } from 'next/navigation';
-
+// Root redirects to /dashboard via next.config.mjs
 export default function Home() {
-  redirect('/dashboard');
+  return null;
 }
