@@ -1,5 +1,3 @@
-import { auth, signOut } from '@/lib/auth';
-import { redirect } from 'next/navigation';
 import sql from '@/lib/db';
 import Link from 'next/link';
 
@@ -57,8 +55,6 @@ function parseRationale(supporting_data: string | null): string {
 }
 
 export default async function Proposals() {
-  const session = await auth();
-  if (!session) redirect('/');
 
   const rows = (await sql`
     SELECT * FROM proposals ORDER BY created_at DESC
@@ -72,9 +68,7 @@ export default async function Proposals() {
         <h1 style={{ margin: 0 }}>Hedge Fund OS</h1>
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
           <Link href="/dashboard">← Stocks</Link>
-          <form action={async () => { 'use server'; await signOut(); }}>
-            <button type="submit" style={{ cursor: 'pointer' }}>Sign out</button>
-          </form>
+          <a href="https://poro.uk/api/signout" style={{ cursor: 'pointer' }}>Sign out</a>
         </div>
       </div>
 

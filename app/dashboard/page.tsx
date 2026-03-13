@@ -1,5 +1,3 @@
-import { auth, signOut } from '@/lib/auth';
-import { redirect } from 'next/navigation';
 import sql from '@/lib/db';
 import Link from 'next/link';
 
@@ -34,8 +32,6 @@ function SignalBadge({ signal }: { signal: string }) {
 }
 
 export default async function Dashboard() {
-  const session = await auth();
-  if (!session) redirect('/');
 
   const rows = (await sql`
     SELECT * FROM (
@@ -54,9 +50,7 @@ export default async function Dashboard() {
         <h1 style={{ margin: 0 }}>Hedge Fund OS</h1>
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
           <Link href="/dashboard/proposals">Recommendations →</Link>
-          <form action={async () => { 'use server'; await signOut(); }}>
-            <button type="submit" style={{ cursor: 'pointer' }}>Sign out</button>
-          </form>
+          <a href="https://poro.uk/api/signout" style={{ cursor: 'pointer' }}>Sign out</a>
         </div>
       </div>
 
