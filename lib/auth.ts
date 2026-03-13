@@ -5,7 +5,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google],
   callbacks: {
     async signIn({ user }) {
-      return user.email === process.env.ALLOWED_EMAIL;
+      return !!user.email && user.email === process.env.ALLOWED_EMAIL;
     },
   },
 });

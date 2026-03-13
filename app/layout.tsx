@@ -3,7 +3,7 @@ import SessionProvider from '@/components/SessionProvider';
 
 export const metadata: Metadata = {
   title: 'Hedge Fund OS',
-  description: 'Project description',
+  description: 'Investment dashboard — stocks and recommendations.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
