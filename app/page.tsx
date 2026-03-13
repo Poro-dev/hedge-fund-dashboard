@@ -8,7 +8,7 @@ export default async function Home() {
 
   return (
     <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-      <h1>Project Name</h1>
+      <h1>Hedge Fund OS</h1>
       <form action={async () => { 'use server'; await signIn('google'); }}>
         <button type="submit">Sign in with Google</button>
       </form>

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import SessionProvider from '@/components/SessionProvider';
 
 export const metadata: Metadata = {
-  title: 'Project Name',
+  title: 'Hedge Fund OS',
   description: 'Project description',
 };
 
