@@ -11,7 +11,7 @@ type Snapshot = {
   rsi: number | null;
   macd: number | null;
   signal: string;
-  fetched_at: string;
+  fetched_at: Date;
 };
 
 function SignalBadge({ signal }: { signal: string }) {
@@ -45,6 +45,8 @@ export default async function Dashboard() {
     ) latest
     ORDER BY CASE signal WHEN 'BUY' THEN 1 WHEN 'HOLD' THEN 2 WHEN 'SELL' THEN 3 ELSE 4 END
   `) as Snapshot[];
+
+  const today = new Date().toLocaleDateString();
 
   return (
     <main style={{ fontFamily: 'sans-serif', maxWidth: '900px', margin: '0 auto', padding: '24px', color: '#222' }}>
@@ -86,14 +88,14 @@ export default async function Dashboard() {
                 <td style={{ padding: '8px' }}>{row.macd != null ? row.macd.toFixed(3) : '—'}</td>
                 <td style={{ padding: '8px' }}><SignalBadge signal={row.signal} /></td>
                 <td style={{ padding: '8px', color: '#888', fontSize: '12px' }}>
-                  {new Date(row.fetched_at).toLocaleString()}
+                  {row.fetched_at.toLocaleString()}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
-      <p style={{ color: '#888', fontSize: '12px', marginTop: '32px' }}>Hedge Fund OS — {new Date().toLocaleDateString()}</p>
+      <p style={{ color: '#888', fontSize: '12px', marginTop: '32px' }}>Hedge Fund OS — {today}</p>
     </main>
   );
 }

@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+import { auth, signOut } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import sql from '@/lib/db';
 import Link from 'next/link';
@@ -11,7 +11,7 @@ type Proposal = {
   supporting_data: string | null;
   suggested_allocation: number | null;
   status: string;
-  created_at: string;
+  created_at: Date;
 };
 
 function ActionBadge({ action }: { action: string }) {
@@ -64,11 +64,18 @@ export default async function Proposals() {
     SELECT * FROM proposals ORDER BY created_at DESC
   `) as Proposal[];
 
+  const today = new Date().toLocaleDateString();
+
   return (
     <main style={{ fontFamily: 'sans-serif', maxWidth: '1000px', margin: '0 auto', padding: '24px', color: '#222' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #222', paddingBottom: '12px', marginBottom: '24px' }}>
         <h1 style={{ margin: 0 }}>Hedge Fund OS</h1>
-        <Link href="/dashboard">← Stocks</Link>
+        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <Link href="/dashboard">← Stocks</Link>
+          <form action={async () => { 'use server'; await signOut(); }}>
+            <button type="submit" style={{ cursor: 'pointer' }}>Sign out</button>
+          </form>
+        </div>
       </div>
 
       <h2>Recommendations</h2>
@@ -97,14 +104,14 @@ export default async function Proposals() {
                 <td style={{ padding: '8px' }}>{row.suggested_allocation != null ? `${row.suggested_allocation.toFixed(1)}%` : '—'}</td>
                 <td style={{ padding: '8px' }}><StatusBadge status={row.status} /></td>
                 <td style={{ padding: '8px', color: '#888', fontSize: '12px' }}>
-                  {new Date(row.created_at).toLocaleDateString()}
+                  {row.created_at.toLocaleDateString()}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
-      <p style={{ color: '#888', fontSize: '12px', marginTop: '32px' }}>Hedge Fund OS — {new Date().toLocaleDateString()}</p>
+      <p style={{ color: '#888', fontSize: '12px', marginTop: '32px' }}>Hedge Fund OS — {today}</p>
     </main>
   );
 }
