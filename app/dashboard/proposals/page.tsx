@@ -95,9 +95,9 @@ export default async function Proposals() {
               <tr key={row.id} style={{ borderBottom: '1px solid #eee' }}>
                 <td style={{ padding: '8px', fontWeight: 'bold' }}>{row.ticker}</td>
                 <td style={{ padding: '8px' }}><ActionBadge action={row.action} /></td>
-                <td style={{ padding: '8px' }}>{row.conviction != null ? `${row.conviction}/10` : '—'}</td>
+                <td style={{ padding: '8px' }}>{row.conviction != null ? `${Number(row.conviction)}/10` : '—'}</td>
                 <td style={{ padding: '8px', maxWidth: '300px', color: '#444' }}>{parseRationale(row.supporting_data)}</td>
-                <td style={{ padding: '8px' }}>{row.suggested_allocation != null ? `${row.suggested_allocation.toFixed(1)}%` : '—'}</td>
+                <td style={{ padding: '8px' }}>{row.suggested_allocation != null ? `${Number(row.suggested_allocation).toFixed(1)}%` : '—'}</td>
                 <td style={{ padding: '8px' }}><StatusBadge status={row.status} /></td>
                 <td style={{ padding: '8px', color: '#888', fontSize: '12px' }}>
                   {row.created_at.toLocaleDateString()}

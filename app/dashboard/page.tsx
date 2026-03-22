@@ -76,12 +76,12 @@ export default async function Dashboard() {
             {rows.map((row) => (
               <tr key={row.id} style={{ borderBottom: '1px solid #eee' }}>
                 <td style={{ padding: '8px', fontWeight: 'bold' }}>{row.ticker}</td>
-                <td style={{ padding: '8px' }}>{row.price != null ? `$${row.price.toFixed(2)}` : '—'}</td>
-                <td style={{ padding: '8px', color: (row.change_pct ?? 0) >= 0 ? '#00aa44' : '#cc0000' }}>
-                  {row.change_pct != null ? `${row.change_pct >= 0 ? '+' : ''}${row.change_pct.toFixed(2)}%` : '—'}
+                <td style={{ padding: '8px' }}>{row.price != null ? `$${Number(row.price).toFixed(2)}` : '—'}</td>
+                <td style={{ padding: '8px', color: Number(row.change_pct ?? 0) >= 0 ? '#00aa44' : '#cc0000' }}>
+                  {row.change_pct != null ? `${Number(row.change_pct) >= 0 ? '+' : ''}${Number(row.change_pct).toFixed(2)}%` : '—'}
                 </td>
-                <td style={{ padding: '8px' }}>{row.rsi != null ? row.rsi.toFixed(1) : '—'}</td>
-                <td style={{ padding: '8px' }}>{row.macd != null ? row.macd.toFixed(3) : '—'}</td>
+                <td style={{ padding: '8px' }}>{row.rsi != null ? Number(row.rsi).toFixed(1) : '—'}</td>
+                <td style={{ padding: '8px' }}>{row.macd != null ? Number(row.macd).toFixed(3) : '—'}</td>
                 <td style={{ padding: '8px' }}><SignalBadge signal={row.signal} /></td>
                 <td style={{ padding: '8px', color: '#888', fontSize: '12px' }}>
                   {row.fetched_at.toLocaleString()}
