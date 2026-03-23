@@ -14,6 +14,19 @@ type Snapshot = {
   fetched_at: Date;
 };
 
+const COMPANY_NAMES: Record<string, string> = {
+  ACN: 'Accenture', AMD: 'Advanced Micro Devices', AMZN: 'Amazon', ANET: 'Arista Networks',
+  ASAN: 'Asana', AVGO: 'Broadcom', BOX: 'Box', 'BRK-B': 'Berkshire Hathaway',
+  BTC: 'Bitcoin', CEG: 'Constellation Energy', CIEN: 'Ciena', COHR: 'Coherent',
+  CRM: 'Salesforce', CSCO: 'Cisco', DELL: 'Dell', ETH: 'Ethereum', ETN: 'Eaton',
+  FN: 'Fabrinet', GEV: 'GE Vernova', GLD: 'SPDR Gold', GOOGL: 'Alphabet',
+  HUBB: 'Hubbell', HYPE: 'Hyperliquid', INFY: 'Infosys', INTC: 'Intel',
+  LITE: 'Lumentum', MELI: 'MercadoLibre', MNDY: 'Monday.com', MOD: 'Modine',
+  MRVL: 'Marvell', MSFT: 'Microsoft', MU: 'Micron', NVDA: 'NVIDIA',
+  ORCL: 'Oracle', PLTR: 'Palantir', SHOP: 'Shopify', SMCI: 'Super Micro',
+  TSM: 'TSMC', VRT: 'Vertiv', WIT: 'Wipro', ZM: 'Zoom',
+};
+
 function SignalBadge({ signal }: { signal: string }) {
   const colors: Record<string, string> = {
     BUY: '#00aa44',
@@ -75,7 +88,14 @@ export default async function Dashboard() {
           <tbody>
             {rows.map((row) => (
               <tr key={row.id} style={{ borderBottom: '1px solid #eee' }}>
-                <td style={{ padding: '8px', fontWeight: 'bold' }}>{row.ticker}</td>
+                <td style={{ padding: '8px', fontWeight: 'bold' }}>
+                  {row.ticker}
+                  {COMPANY_NAMES[row.ticker] && (
+                    <span style={{ fontWeight: 'normal', color: '#666', fontSize: '12px', marginLeft: '6px' }}>
+                      {COMPANY_NAMES[row.ticker]}
+                    </span>
+                  )}
+                </td>
                 <td style={{ padding: '8px' }}>{row.price != null ? `$${Number(row.price).toFixed(2)}` : '—'}</td>
                 <td style={{ padding: '8px', color: Number(row.change_pct ?? 0) >= 0 ? '#00aa44' : '#cc0000' }}>
                   {row.change_pct != null ? `${Number(row.change_pct) >= 0 ? '+' : ''}${Number(row.change_pct).toFixed(2)}%` : '—'}
